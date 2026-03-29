@@ -8,6 +8,7 @@ type SortDir = "asc" | "desc";
 
 const columns: { key: SortKey; label: string; align?: "right" }[] = [
   { key: "name", label: "Model" },
+  { key: "overallScore", label: "Score", align: "right" },
   { key: "organization", label: "Organization" },
   { key: "params", label: "Params" },
   { key: "contextWindow", label: "Context", align: "right" },
@@ -15,7 +16,6 @@ const columns: { key: SortKey; label: string; align?: "right" }[] = [
   { key: "mmlu", label: "MMLU", align: "right" },
   { key: "humanEval", label: "HumanEval", align: "right" },
   { key: "gpqa", label: "GPQA", align: "right" },
-  { key: "overallScore", label: "Score", align: "right" },
 ];
 
 function formatCtx(n: number): string {
@@ -146,6 +146,19 @@ export default function Leaderboard() {
                 <td className="px-4 py-3 font-medium text-white whitespace-nowrap">
                   {model.name}
                 </td>
+                <td className="px-4 py-3 text-right font-mono font-bold">
+                  <span
+                    className={
+                      model.overallScore >= 88
+                        ? "text-blue-400"
+                        : model.overallScore >= 75
+                        ? "text-gray-200"
+                        : "text-gray-400"
+                    }
+                  >
+                    {model.overallScore.toFixed(1)}
+                  </span>
+                </td>
                 <td className="px-4 py-3 text-gray-300">{model.organization}</td>
                 <td className="px-4 py-3 text-gray-300 text-xs whitespace-nowrap">
                   {model.params}
@@ -187,19 +200,6 @@ export default function Leaderboard() {
                     }
                   >
                     {formatScore(model.gpqa)}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-right font-mono font-bold">
-                  <span
-                    className={
-                      model.overallScore >= 88
-                        ? "text-blue-400"
-                        : model.overallScore >= 75
-                        ? "text-gray-200"
-                        : "text-gray-400"
-                    }
-                  >
-                    {model.overallScore.toFixed(1)}
                   </span>
                 </td>
               </tr>
