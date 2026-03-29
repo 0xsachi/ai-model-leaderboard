@@ -8,10 +8,10 @@ type SortDir = "asc" | "desc";
 
 const columns: { key: SortKey; label: string; align?: "right" }[] = [
   { key: "name", label: "Model" },
-  { key: "provider", label: "Provider" },
+  { key: "organization", label: "Organization" },
+  { key: "params", label: "Params" },
   { key: "contextWindow", label: "Context", align: "right" },
-  { key: "inputCostPer1M", label: "Input $/1M", align: "right" },
-  { key: "outputCostPer1M", label: "Output $/1M", align: "right" },
+  { key: "license", label: "License" },
   { key: "mmlu", label: "MMLU", align: "right" },
   { key: "humanEval", label: "HumanEval", align: "right" },
   { key: "gpqa", label: "GPQA", align: "right" },
@@ -23,11 +23,6 @@ function formatCtx(n: number): string {
   return `${(n / 1_000).toFixed(0)}K`;
 }
 
-function formatCost(n: number): string {
-  if (n < 1) return `$${n.toFixed(2)}`;
-  return `$${n.toFixed(2)}`;
-}
-
 function formatScore(n: number | null): string {
   return n == null ? "—" : n.toFixed(1);
 }
@@ -36,10 +31,10 @@ export default function Leaderboard() {
   const [sortKey, setSortKey] = useState<SortKey>("overallScore");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [filter, setFilter] = useState("");
-  const [providerFilter, setProviderFilter] = useState<string>("all");
+  const [orgFilter, setOrgFilter] = useState<string>("all");
 
-  const providers = useMemo(
-    () => Array.from(new Set(models.map((m) => m.provider))).sort(),
+  const organizations = useMemo(
+    () => Array.from(new Set(models.map((m) => m.organization))).sort(),
     []
   );
 
@@ -47,10 +42,10 @@ export default function Leaderboard() {
     let filtered = models.filter((m) => {
       const matchesText =
         m.name.toLowerCase().includes(filter.toLowerCase()) ||
-        m.provider.toLowerCase().includes(filter.toLowerCase());
-      const matchesProvider =
-        providerFilter === "all" || m.provider === providerFilter;
-      return matchesText && matchesProvider;
+        m.organization.toLowerCase().includes(filter.toLowerCase());
+      const matchesOrg =
+        orgFilter === "all" || m.organization === orgFilter;
+      return matchesText && matchesOrg;
     });
 
     return filtered.sort((a, b) => {
@@ -68,14 +63,14 @@ export default function Leaderboard() {
         ? (av as number) - (bv as number)
         : (bv as number) - (av as number);
     });
-  }, [sortKey, sortDir, filter, providerFilter]);
+  }, [sortKey, sortDir, filter, orgFilter]);
 
   function handleSort(key: SortKey) {
     if (key === sortKey) {
       setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     } else {
       setSortKey(key);
-      setSortDir(key === "name" || key === "provider" ? "asc" : "desc");
+      setSortDir(key === "name" || key === "organization" || key === "params" || key === "license" ? "asc" : "desc");
     }
   }
 
@@ -98,14 +93,14 @@ export default function Leaderboard() {
           className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1"
         />
         <select
-          value={providerFilter}
-          onChange={(e) => setProviderFilter(e.target.value)}
+          value={orgFilter}
+          onChange={(e) => setOrgFilter(e.target.value)}
           className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="all">All Providers</option>
-          {providers.map((p) => (
-            <option key={p} value={p}>
-              {p}
+          <option value="all">All Organizations</option>
+          {organizations.map((o) => (
+            <option key={o} value={o}>
+              {o}
             </option>
           ))}
         </select>
@@ -151,20 +146,20 @@ export default function Leaderboard() {
                 <td className="px-4 py-3 font-medium text-white whitespace-nowrap">
                   {model.name}
                 </td>
-                <td className="px-4 py-3 text-gray-300">{model.provider}</td>
+                <td className="px-4 py-3 text-gray-300">{model.organization}</td>
+                <td className="px-4 py-3 text-gray-300 text-xs whitespace-nowrap">
+                  {model.params}
+                </td>
                 <td className="px-4 py-3 text-right text-gray-300 font-mono">
                   {formatCtx(model.contextWindow)}
                 </td>
-                <td className="px-4 py-3 text-right text-gray-300 font-mono">
-                  {formatCost(model.inputCostPer1M)}
-                </td>
-                <td className="px-4 py-3 text-right text-gray-300 font-mono">
-                  {formatCost(model.outputCostPer1M)}
+                <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">
+                  {model.license}
                 </td>
                 <td className="px-4 py-3 text-right font-mono">
                   <span
                     className={
-                      model.mmlu && model.mmlu >= 92
+                      model.mmlu && model.mmlu >= 88
                         ? "text-green-400"
                         : "text-gray-300"
                     }
@@ -175,7 +170,7 @@ export default function Leaderboard() {
                 <td className="px-4 py-3 text-right font-mono">
                   <span
                     className={
-                      model.humanEval && model.humanEval >= 92
+                      model.humanEval && model.humanEval >= 88
                         ? "text-green-400"
                         : "text-gray-300"
                     }
@@ -186,7 +181,7 @@ export default function Leaderboard() {
                 <td className="px-4 py-3 text-right font-mono">
                   <span
                     className={
-                      model.gpqa && model.gpqa >= 60
+                      model.gpqa && model.gpqa >= 55
                         ? "text-green-400"
                         : "text-gray-300"
                     }
@@ -197,9 +192,9 @@ export default function Leaderboard() {
                 <td className="px-4 py-3 text-right font-mono font-bold">
                   <span
                     className={
-                      model.overallScore >= 90
+                      model.overallScore >= 88
                         ? "text-blue-400"
-                        : model.overallScore >= 85
+                        : model.overallScore >= 75
                         ? "text-gray-200"
                         : "text-gray-400"
                     }
@@ -226,6 +221,7 @@ export default function Leaderboard() {
       <p className="mt-4 text-xs text-gray-600">
         {sorted.length} model{sorted.length !== 1 ? "s" : ""} shown. Click
         column headers to sort. Scores are approximate from public benchmarks.
+        Open-source and open-weight models only.
       </p>
     </div>
   );

@@ -1,12 +1,12 @@
 # AI Model Leaderboard
 
-Open-source leaderboard ranking AI models by performance benchmarks and cost.
+Open-source leaderboard ranking open-source and open-weight AI models by performance benchmarks.
 
 ## Features
 
-- 13 major AI models ranked by composite score
-- Sortable columns: name, provider, context window, pricing, MMLU, HumanEval, GPQA, overall score
-- Filter by text search or provider
+- 39 open-source/open-weight models across 3 tiers (Frontier, Mid-Size, Efficient)
+- Sortable columns: model, organization, params, context window, license, MMLU, HumanEval, GPQA, overall score
+- Filter by text search or organization
 - Dark theme, fast-loading static site
 - Built with Next.js 16, TypeScript, and Tailwind CSS 4
 

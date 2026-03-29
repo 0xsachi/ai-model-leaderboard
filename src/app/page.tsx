@@ -8,8 +8,8 @@ export default function Home() {
           AI Model Leaderboard
         </h1>
         <p className="mt-2 text-gray-400">
-          Open-source rankings of AI models by performance benchmarks and cost.
-          Sortable, filterable, community-driven.
+          Rankings of open-source and open-weight AI models by performance
+          benchmarks. Sortable, filterable, community-driven.
         </p>
       </div>
       <Leaderboard />
