@@ -8,10 +8,14 @@ export interface Model {
   humanEval: number | null;
   gpqa: number | null;
   overallScore: number;
+  inputCostPer1M: number | null; // USD per 1M input tokens (API pricing where available)
+  outputCostPer1M: number | null; // USD per 1M output tokens
+  tier: "frontier" | "mid" | "small";
 }
 
 // Open-source / open-weight models only.
 // Scores are approximate, sourced from public benchmarks as of early 2026.
+// Cost data reflects typical API pricing on major inference providers (Together, Fireworks, etc.).
 export const models: Model[] = [
   // Tier 1 — Frontier Open Source
   {
@@ -24,6 +28,9 @@ export const models: Model[] = [
     humanEval: 91.2,
     gpqa: 62.5,
     overallScore: 91.0,
+    inputCostPer1M: 0.50,
+    outputCostPer1M: 1.50,
+    tier: "frontier",
   },
   {
     name: "DeepSeek R1",
@@ -35,6 +42,9 @@ export const models: Model[] = [
     humanEval: 90.8,
     gpqa: 71.5,
     overallScore: 92.5,
+    inputCostPer1M: 0.55,
+    outputCostPer1M: 2.19,
+    tier: "frontier",
   },
   {
     name: "DeepSeek V3",
@@ -46,6 +56,9 @@ export const models: Model[] = [
     humanEval: 89.5,
     gpqa: 59.1,
     overallScore: 87.6,
+    inputCostPer1M: 0.50,
+    outputCostPer1M: 1.50,
+    tier: "frontier",
   },
   {
     name: "Qwen 3.5 397B",
@@ -57,6 +70,9 @@ export const models: Model[] = [
     humanEval: 90.5,
     gpqa: 63.8,
     overallScore: 90.8,
+    inputCostPer1M: 1.20,
+    outputCostPer1M: 3.60,
+    tier: "frontier",
   },
   {
     name: "Qwen 3 235B",
@@ -68,6 +84,9 @@ export const models: Model[] = [
     humanEval: 89.2,
     gpqa: 60.1,
     overallScore: 88.5,
+    inputCostPer1M: 0.80,
+    outputCostPer1M: 2.40,
+    tier: "frontier",
   },
   {
     name: "GLM-5",
@@ -79,6 +98,9 @@ export const models: Model[] = [
     humanEval: 88.4,
     gpqa: 61.2,
     overallScore: 89.0,
+    inputCostPer1M: 1.00,
+    outputCostPer1M: 3.00,
+    tier: "frontier",
   },
   {
     name: "Kimi K2.5",
@@ -90,6 +112,9 @@ export const models: Model[] = [
     humanEval: 91.5,
     gpqa: 64.0,
     overallScore: 91.5,
+    inputCostPer1M: 1.50,
+    outputCostPer1M: 4.50,
+    tier: "frontier",
   },
   {
     name: "Llama 4 Maverick",
@@ -101,6 +126,9 @@ export const models: Model[] = [
     humanEval: 90.4,
     gpqa: 60.5,
     overallScore: 88.9,
+    inputCostPer1M: 0.90,
+    outputCostPer1M: 2.70,
+    tier: "frontier",
   },
   {
     name: "Llama 4 Scout",
@@ -112,6 +140,9 @@ export const models: Model[] = [
     humanEval: 86.0,
     gpqa: 51.2,
     overallScore: 83.4,
+    inputCostPer1M: 0.35,
+    outputCostPer1M: 1.05,
+    tier: "mid",
   },
 
   // Tier 2 — Strong Mid-Size
@@ -125,6 +156,9 @@ export const models: Model[] = [
     humanEval: 85.0,
     gpqa: 49.8,
     overallScore: 80.2,
+    inputCostPer1M: 0.20,
+    outputCostPer1M: 0.60,
+    tier: "mid",
   },
   {
     name: "Llama 3.3 70B",
@@ -136,6 +170,9 @@ export const models: Model[] = [
     humanEval: 84.5,
     gpqa: 46.7,
     overallScore: 79.8,
+    inputCostPer1M: 0.60,
+    outputCostPer1M: 0.88,
+    tier: "mid",
   },
   {
     name: "Llama 3.1 405B",
@@ -147,6 +184,9 @@ export const models: Model[] = [
     humanEval: 89.0,
     gpqa: 50.4,
     overallScore: 84.2,
+    inputCostPer1M: 3.00,
+    outputCostPer1M: 3.00,
+    tier: "frontier",
   },
   {
     name: "Mistral Large 2",
@@ -158,6 +198,9 @@ export const models: Model[] = [
     humanEval: 85.2,
     gpqa: 52.4,
     overallScore: 84.1,
+    inputCostPer1M: 2.00,
+    outputCostPer1M: 6.00,
+    tier: "frontier",
   },
   {
     name: "Mixtral 8x22B",
@@ -169,6 +212,9 @@ export const models: Model[] = [
     humanEval: 75.0,
     gpqa: 36.2,
     overallScore: 68.5,
+    inputCostPer1M: 0.60,
+    outputCostPer1M: 0.60,
+    tier: "mid",
   },
   {
     name: "Command A",
@@ -180,6 +226,9 @@ export const models: Model[] = [
     humanEval: 82.0,
     gpqa: 48.5,
     overallScore: 78.0,
+    inputCostPer1M: 2.50,
+    outputCostPer1M: 10.00,
+    tier: "mid",
   },
   {
     name: "Nemotron Ultra 253B",
@@ -191,6 +240,9 @@ export const models: Model[] = [
     humanEval: 86.8,
     gpqa: 54.2,
     overallScore: 83.5,
+    inputCostPer1M: 1.80,
+    outputCostPer1M: 5.40,
+    tier: "frontier",
   },
   {
     name: "GPT-oss 120B",
@@ -202,6 +254,9 @@ export const models: Model[] = [
     humanEval: 84.2,
     gpqa: 47.5,
     overallScore: 79.5,
+    inputCostPer1M: 1.50,
+    outputCostPer1M: 4.50,
+    tier: "mid",
   },
   {
     name: "MiniMax M2.5",
@@ -213,6 +268,9 @@ export const models: Model[] = [
     humanEval: 84.0,
     gpqa: 50.0,
     overallScore: 80.5,
+    inputCostPer1M: 0.80,
+    outputCostPer1M: 2.40,
+    tier: "mid",
   },
   {
     name: "Devstral 2",
@@ -224,6 +282,9 @@ export const models: Model[] = [
     humanEval: 88.5,
     gpqa: 45.0,
     overallScore: 80.0,
+    inputCostPer1M: 1.00,
+    outputCostPer1M: 3.00,
+    tier: "mid",
   },
   {
     name: "DBRX",
@@ -235,6 +296,9 @@ export const models: Model[] = [
     humanEval: 70.1,
     gpqa: 32.5,
     overallScore: 64.0,
+    inputCostPer1M: 0.75,
+    outputCostPer1M: 0.75,
+    tier: "mid",
   },
   {
     name: "Jamba 1.5 Large",
@@ -246,6 +310,9 @@ export const models: Model[] = [
     humanEval: 78.5,
     gpqa: 42.0,
     overallScore: 74.5,
+    inputCostPer1M: 2.00,
+    outputCostPer1M: 8.00,
+    tier: "mid",
   },
 
   // Tier 3 — Efficient/Small
@@ -259,6 +326,9 @@ export const models: Model[] = [
     humanEval: 78.5,
     gpqa: 40.2,
     overallScore: 72.5,
+    inputCostPer1M: 0.10,
+    outputCostPer1M: 0.30,
+    tier: "small",
   },
   {
     name: "Qwen 3 8B",
@@ -270,6 +340,9 @@ export const models: Model[] = [
     humanEval: 72.0,
     gpqa: 34.5,
     overallScore: 66.0,
+    inputCostPer1M: 0.05,
+    outputCostPer1M: 0.15,
+    tier: "small",
   },
   {
     name: "Qwen 3 4B",
@@ -281,6 +354,9 @@ export const models: Model[] = [
     humanEval: 62.0,
     gpqa: 28.0,
     overallScore: 57.0,
+    inputCostPer1M: 0.03,
+    outputCostPer1M: 0.06,
+    tier: "small",
   },
   {
     name: "Qwen 2.5 Coder 32B",
@@ -292,6 +368,9 @@ export const models: Model[] = [
     humanEval: 92.5,
     gpqa: 35.0,
     overallScore: 75.0,
+    inputCostPer1M: 0.20,
+    outputCostPer1M: 0.60,
+    tier: "mid",
   },
   {
     name: "Gemma 3 27B",
@@ -303,6 +382,9 @@ export const models: Model[] = [
     humanEval: 76.0,
     gpqa: 38.5,
     overallScore: 70.5,
+    inputCostPer1M: 0.15,
+    outputCostPer1M: 0.45,
+    tier: "small",
   },
   {
     name: "Gemma 3 12B",
@@ -314,6 +396,9 @@ export const models: Model[] = [
     humanEval: 68.5,
     gpqa: 32.0,
     overallScore: 63.0,
+    inputCostPer1M: 0.08,
+    outputCostPer1M: 0.20,
+    tier: "small",
   },
   {
     name: "Gemma 3 4B",
@@ -325,6 +410,9 @@ export const models: Model[] = [
     humanEval: 55.0,
     gpqa: 25.0,
     overallScore: 51.5,
+    inputCostPer1M: 0.03,
+    outputCostPer1M: 0.06,
+    tier: "small",
   },
   {
     name: "Gemma 3 1B",
@@ -336,6 +424,9 @@ export const models: Model[] = [
     humanEval: 35.0,
     gpqa: 18.0,
     overallScore: 35.5,
+    inputCostPer1M: 0.01,
+    outputCostPer1M: 0.02,
+    tier: "small",
   },
   {
     name: "Phi-4 14B",
@@ -347,6 +438,9 @@ export const models: Model[] = [
     humanEval: 82.0,
     gpqa: 44.5,
     overallScore: 76.5,
+    inputCostPer1M: 0.10,
+    outputCostPer1M: 0.30,
+    tier: "small",
   },
   {
     name: "Mistral Small 3.1 24B",
@@ -358,6 +452,9 @@ export const models: Model[] = [
     humanEval: 78.0,
     gpqa: 40.0,
     overallScore: 72.8,
+    inputCostPer1M: 0.10,
+    outputCostPer1M: 0.30,
+    tier: "small",
   },
   {
     name: "Mistral Nemo 12B",
@@ -369,6 +466,9 @@ export const models: Model[] = [
     humanEval: 65.5,
     gpqa: 30.0,
     overallScore: 59.5,
+    inputCostPer1M: 0.05,
+    outputCostPer1M: 0.15,
+    tier: "small",
   },
   {
     name: "Devstral Small 2 24B",
@@ -380,6 +480,9 @@ export const models: Model[] = [
     humanEval: 82.5,
     gpqa: 33.0,
     overallScore: 69.0,
+    inputCostPer1M: 0.10,
+    outputCostPer1M: 0.30,
+    tier: "small",
   },
   {
     name: "Llama 3.1 8B",
@@ -391,6 +494,9 @@ export const models: Model[] = [
     humanEval: 62.5,
     gpqa: 28.0,
     overallScore: 58.0,
+    inputCostPer1M: 0.05,
+    outputCostPer1M: 0.08,
+    tier: "small",
   },
   {
     name: "Falcon 3 10B",
@@ -402,6 +508,9 @@ export const models: Model[] = [
     humanEval: 58.0,
     gpqa: 27.5,
     overallScore: 56.0,
+    inputCostPer1M: 0.05,
+    outputCostPer1M: 0.10,
+    tier: "small",
   },
   {
     name: "Falcon 3 7B",
@@ -413,6 +522,9 @@ export const models: Model[] = [
     humanEval: 52.0,
     gpqa: 24.0,
     overallScore: 50.5,
+    inputCostPer1M: 0.03,
+    outputCostPer1M: 0.06,
+    tier: "small",
   },
   {
     name: "Yi-1.5 34B",
@@ -424,6 +536,9 @@ export const models: Model[] = [
     humanEval: 71.0,
     gpqa: 35.5,
     overallScore: 67.0,
+    inputCostPer1M: 0.20,
+    outputCostPer1M: 0.60,
+    tier: "mid",
   },
   {
     name: "Yi-1.5 9B",
@@ -435,6 +550,9 @@ export const models: Model[] = [
     humanEval: 60.0,
     gpqa: 28.0,
     overallScore: 57.5,
+    inputCostPer1M: 0.05,
+    outputCostPer1M: 0.10,
+    tier: "small",
   },
   {
     name: "StarCoder2 15B",
@@ -446,5 +564,8 @@ export const models: Model[] = [
     humanEval: 72.0,
     gpqa: null,
     overallScore: 55.0,
+    inputCostPer1M: 0.10,
+    outputCostPer1M: 0.20,
+    tier: "small",
   },
 ];
